@@ -1,32 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define TAMANHO 100 // ESTÁTICA +GOLBAL (escopo)
+#define TAMANHO 100 // MAX: ESTÁTICA
 
-void funcao(char *MSG, char *INV);
+void funcao(char palavra[TAMANHO], int *min, int *mai, int *demais);
 
-void funcao(char *MSG, char *INV)
+void funcao(char palavra[TAMANHO], int *min, int *mai, int *demais)
 {
-    int j = 0, i = strlen(MSG) - 1;
-    while( i >= 0)
+    int i = 0;
+    *min = 0; *mai = 0; *demais = 0;
+    while(palavra[i] != '\0')
     {
-        INV[j] = MSG[i]; // palavra nova
-        j++;
-        i--;
+        if(palavra[i] >= 'a' && palavra[i] <= 'z')
+            *min = (*min) + 1;
+        else if(palavra[i] >= 'A' && palavra[i] <= 'Z')
+            *mai = (*mai) + 1;
+        else
+            *demais = (*demais) + 1;
+        i++;
     }
-    INV[j] = '\0'; // fechar palavra nova
 }
-
 int main()
 {
-    char MSG[TAMANHO], INV[TAMANHO];
+    char palavra[TAMANHO];
+    int min, mai, demais;
 
-    printf("MSG: ");
-    scanf("\n%[^\n]", MSG);
+    printf("PALAVRA: ");
+    scanf("\n%[^\n]", &palavra);
 
-    funcao(MSG, INV);
+    funcao(palavra, &min, &mai, &demais);
 
-    printf("ORIGINAL: %s\n", MSG);
-    printf("INVERSO: %s\n", INV);
+    printf("PALAVRA: %s TEM: \n", palavra);
+    printf("MINUSCULAS: %i\n", min);
+    printf("MAIUSCULAS: %i\n", mai);
+    printf("DEMAIS: %i\n", demais);
 
     return 0;
 }
